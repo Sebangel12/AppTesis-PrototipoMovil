@@ -1,4 +1,7 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:atel_redes_telecom_prot/app/ui/pages/Actividades/ActProgMov/Parciales/Parcial%201/MActSemPM1P.dart';
+import 'package:atel_redes_telecom_prot/app/ui/pages/Actividades/ActProgMov/Parciales/Parcial%202/MActSemPM2P.dart';
+import 'package:atel_redes_telecom_prot/app/ui/pages/Actividades/ActProgMov/Parciales/Parcial%203/MActSemPM3P.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/ui.dart';
@@ -196,9 +199,11 @@ class InfCursoProgAPP extends StatelessWidget {
                               color: (const Color(0xFFCDBE78)),
                               padding:
                                   const EdgeInsets.only(right: 15, left: 15),
-                              onPressed: () {
-                                router.pushNamed(Routes.ACTBASEDATOS);
-                              },
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const MActsemAMparcial1())),
                               child: const Text(
                                 'Primer Parcial',
                                 style: TextStyle(color: Colors.black),
@@ -212,9 +217,11 @@ class InfCursoProgAPP extends StatelessWidget {
                               color: (const Color(0xFFCDBE78)),
                               padding:
                                   const EdgeInsets.only(right: 15, left: 15),
-                              onPressed: () {
-                                router.pushNamed(Routes.ACTBASEDATOS);
-                              },
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const MActsemAMparcial2())),
                               child: const Text(
                                 'Segundo Parcial',
                                 style: TextStyle(color: Colors.black),
@@ -228,9 +235,11 @@ class InfCursoProgAPP extends StatelessWidget {
                               color: (const Color(0xFFCDBE78)),
                               padding:
                                   const EdgeInsets.only(right: 15, left: 15),
-                              onPressed: () {
-                                router.pushNamed(Routes.ACTBASEDATOS);
-                              },
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const MActsemAMparcial3())),
                               child: const Text(
                                 'Tercer Parcial',
                                 style: TextStyle(color: Colors.black),

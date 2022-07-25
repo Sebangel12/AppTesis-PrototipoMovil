@@ -29,11 +29,4 @@ Map<String, Widget Function(BuildContext)> get appRoutes => {
       Routes.INF_CURSO_PROGVIS: (_) =>
           const InfCursoProgVis(), //pantalla reset pass
       Routes.CONTRON_ACT_BD: (_) => Container(), //pantalla reset pass
-      // Routes.CONTRON_ACT_FUNPROG: (_) => Container(), //pantalla reset pass
-      // Routes.CONTRON_ACT_PROGAPP: (_) => Container(), //pantalla reset pass
-      // Routes.CONTRON_ACT_PROGVIS: (_) => Container(), //pantalla reset pass
-      // Routes.ACTPROGVIS: (_) => const ActProgVis(), //pantalla reset pass
-      // Routes.ACTPROGAPP: (_) => const ActProgApp(), //pantalla reset pass
-      // Routes.ACTBASEDATOS: (_) => const ActBD(), //pantalla reset pass
-      // Routes.ACTFUNPROG: (_) => const ActFunProg(), //pantalla reset pass
     };

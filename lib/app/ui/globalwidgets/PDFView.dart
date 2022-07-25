@@ -1,23 +1,39 @@
-import 'package:atel_redes_telecom_prot/app/data/FirebaseFile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class PDFView extends StatelessWidget {
-  final FirebaseFile file;
-  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
-
-  PDFView({Key? key, required this.file}) : super(key: key);
+class PDFView extends StatefulWidget {
+  final String url;
+  final String name;
+  const PDFView({super.key, required this.url, required this.name});
 
   @override
+  State<PDFView> createState() => _PDFViewState();
+}
+
+class _PDFViewState extends State<PDFView> {
+  @override
   Widget build(BuildContext context) {
+    final dir = widget.url;
+    final name = widget.name;
+    //print(dir);
     return Scaffold(
+      backgroundColor: const Color(0xFF066163),
       appBar: AppBar(
-        title: Text(file.name),
+        backgroundColor: const Color(0xFF383838),
+        title: const Text('Habra el documento PDF'),
         centerTitle: true,
       ),
-      body: SfPdfViewer.network(
-          'gs://prototipoaplicaciontesis.appspot.com/Bases de datos/Primer parcial/Semana 1/bases_para_concurso_de_fotografía_del_ejército_2022.pdf'),
+      body: CupertinoButton(
+        child: Text(
+          name,
+          style: const TextStyle(color: Colors.white),
+        ),
+        onPressed: () {
+          // ignore: deprecated_member_use
+          launch(widget.url);
+        },
+      ),
     );
   }
 }

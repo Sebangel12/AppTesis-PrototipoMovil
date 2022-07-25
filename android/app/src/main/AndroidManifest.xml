@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.atel_redes_telecom_prot">
    <application
-        android:label="atel_redes_telecom_prot"
+        android:label="ATEL"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

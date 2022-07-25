@@ -49,6 +49,8 @@ dependencies:
   dio: ^4.0.6
   url_launcher: ^6.1.4
   flutter_pdfview: ^1.2.2
+  path_provider: ^2.0.11
+  syncfusion_pdfviewer_web: ^20.2.39-beta
  
 
 dev_dependencies:

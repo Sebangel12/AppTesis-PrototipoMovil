@@ -472,7 +472,7 @@ packages:
     source: hosted
     version: "1.8.2"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -664,14 +664,14 @@ packages:
       name: syncfusion_pdfviewer_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.2.36-beta"
+    version: "20.2.39-beta"
   syncfusion_pdfviewer_web:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: syncfusion_pdfviewer_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.2.36-beta"
+    version: "20.2.39-beta"
   syncfusion_pdfviewer_windows:
     dependency: transitive
     description:

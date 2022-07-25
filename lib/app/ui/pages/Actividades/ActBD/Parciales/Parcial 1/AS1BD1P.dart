@@ -1,10 +1,13 @@
 import 'dart:io';
-
+import 'package:atel_redes_telecom_prot/app/ui/globalwidgets/PDFView.dart';
 import 'package:atel_redes_telecom_prot/app/ui/globalwidgets/pdfapi.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../globalwidgets/pdfviewpage.dart';
 
@@ -14,14 +17,13 @@ class AS1BD1P extends StatefulWidget {
 }
 
 class _AS1BD1PState extends State<AS1BD1P> {
+  String dir = '/Bases de datos/Primer parcial/Semana 1';
   late Future<ListResult> futureFiles;
 
   @override
   void initState() {
     super.initState();
-    futureFiles = FirebaseStorage.instance
-        .ref("Base de datos/Primer parcial/Semana 1")
-        .listAll();
+    futureFiles = FirebaseStorage.instance.ref(dir).listAll();
   }
 
   @override
@@ -49,13 +51,13 @@ class _AS1BD1PState extends State<AS1BD1P> {
                     title: IconButton(
                       color: Colors.white,
                       icon: const Icon(Icons.computer),
-                      onPressed: () {},
+                      onPressed: () => downloadFiles(file),
                     ),
                     trailing: IconButton(
                       color: Colors.white,
                       icon: const Icon(Icons.phone_android),
                       onPressed: () async {
-                        const path = "Base de datos/Primer parcial/Semana 1";
+                        final path = dir;
                         final url = file.name;
                         final archv = await PDFApi.loadFirebase(url, path);
                         if (archv == null) return;
@@ -81,4 +83,16 @@ class _AS1BD1PState extends State<AS1BD1P> {
   void openPDF(BuildContext context, File file) => Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => PDfViewPage(archv: file)),
       );
+  Future downloadFiles(Reference ref) async {
+    final url = await ref.getDownloadURL();
+    final name = ref.name;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => PDFView(
+                  url: url,
+                  name: name,
+                )));
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:atel_redes_telecom_prot/app/ui/pages/Actividades/ActBD/Parciales/Parcial%201/MActSemBD1P.dart';
+import 'package:atel_redes_telecom_prot/app/ui/pages/Actividades/ActBD/Parciales/Parcial%202/MActSemBD2P.dart';
+import 'package:atel_redes_telecom_prot/app/ui/pages/Actividades/ActBD/Parciales/Parcial%203/MActSemBD3P.dart';
 import 'package:atel_redes_telecom_prot/app/ui/pages/Menu/MenuE.dart';
 import 'package:atel_redes_telecom_prot/app/ui/pages/Menu/menu.dart';
 import 'package:flutter/cupertino.dart';
@@ -222,9 +224,11 @@ class InfCursoBD extends StatelessWidget {
                               color: (const Color(0xFFCDBE78)),
                               padding:
                                   const EdgeInsets.only(right: 15, left: 15),
-                              onPressed: () {
-                                router.pushNamed(Routes.ACTBASEDATOS);
-                              },
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const MActsemBDparcial2())),
                               child: const Text(
                                 'Segundo Parcial',
                                 style: TextStyle(color: Colors.black),
@@ -238,9 +242,11 @@ class InfCursoBD extends StatelessWidget {
                               color: (const Color(0xFFCDBE78)),
                               padding:
                                   const EdgeInsets.only(right: 15, left: 15),
-                              onPressed: () {
-                                router.pushNamed(Routes.ACTBASEDATOS);
-                              },
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const MActsemBDparcial3())),
                               child: const Text(
                                 'Tercer Parcial',
                                 style: TextStyle(color: Colors.black),

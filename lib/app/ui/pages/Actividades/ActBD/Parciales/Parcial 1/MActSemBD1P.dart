@@ -1,8 +1,15 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:atel_redes_telecom_prot/app/ui/pages/Actividades/ActBD/Parciales/Parcial%201/AS1BD1P.dart';
+import 'package:atel_redes_telecom_prot/app/data/urlsBD.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'AS1BD1P.dart';
+import 'AS2BD1P.dart';
+import 'AS3BD1P.dart';
+import 'AS4BD1P.dart';
+import 'AS5BD1P.dart';
+import 'AS6BD1P.dart';
 
 class MActsemBDparcial1 extends StatelessWidget {
   const MActsemBDparcial1({Key? key}) : super(key: key);
@@ -49,7 +56,7 @@ class MActsemBDparcial1 extends StatelessWidget {
                         CupertinoButton(
                           onPressed: () {
                             // ignore: deprecated_member_use
-                            launch('https://forms.gle/cuNS96gVa7dfvgS5A');
+                            launch(EFBDP1().url1);
                           },
                           child: const Text(
                             'Evaluación formativa',
@@ -76,11 +83,11 @@ class MActsemBDparcial1 extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        AS1BD1P()))),
+                                        AS2BD1P()))),
                         CupertinoButton(
                           onPressed: () {
                             // ignore: deprecated_member_use
-                            launch('https://forms.gle/cuNS96gVa7dfvgS5A');
+                            launch(EFBDP1().url2);
                           },
                           child: const Text(
                             'Evaluación formativa',
@@ -107,11 +114,11 @@ class MActsemBDparcial1 extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        AS1BD1P()))),
+                                        AS3BD1P()))),
                         CupertinoButton(
                           onPressed: () {
                             // ignore: deprecated_member_use
-                            launch('https://forms.gle/cuNS96gVa7dfvgS5A');
+                            launch(EFBDP1().url3);
                           },
                           child: const Text(
                             'Evaluación formativa',
@@ -138,11 +145,11 @@ class MActsemBDparcial1 extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        AS1BD1P()))),
+                                        AS4BD1P()))),
                         CupertinoButton(
                           onPressed: () {
                             // ignore: deprecated_member_use
-                            launch('https://forms.gle/cuNS96gVa7dfvgS5A');
+                            launch(EFBDP1().url4);
                           },
                           child: const Text(
                             'Evaluación formativa',
@@ -169,11 +176,11 @@ class MActsemBDparcial1 extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        AS1BD1P()))),
+                                        AS5BD1P()))),
                         CupertinoButton(
                           onPressed: () {
                             // ignore: deprecated_member_use
-                            launch('https://forms.gle/cuNS96gVa7dfvgS5A');
+                            launch(EFBDP1().url5);
                           },
                           child: const Text(
                             'Evaluación formativa',
@@ -200,11 +207,11 @@ class MActsemBDparcial1 extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        AS1BD1P()))),
+                                        AS6BD1P()))),
                         CupertinoButton(
                           onPressed: () {
                             // ignore: deprecated_member_use
-                            launch('https://forms.gle/cuNS96gVa7dfvgS5A');
+                            launch(EFBDP1().url6);
                           },
                           child: const Text(
                             'Evaluación formativa',
