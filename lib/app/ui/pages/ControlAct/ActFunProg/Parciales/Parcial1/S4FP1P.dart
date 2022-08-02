@@ -10,18 +10,18 @@ import '../../../../../globalwidgets/pdfapi.dart';
 import '../../../../../globalwidgets/pdfviewpage.dart';
 import 'package:flutter/cupertino.dart';
 
-class S2PM1P extends StatefulWidget {
+class S4FP1P extends StatefulWidget {
   @override
-  State<S2PM1P> createState() => _S2PM1PState();
+  State<S4FP1P> createState() => _S4FP1PState();
 }
 
-class _S2PM1PState extends State<S2PM1P> {
+class _S4FP1PState extends State<S4FP1P> {
   late bool _isactive = false;
   PlatformFile? pickedFile;
   UploadTask? uploadTask;
   final _textController = TextEditingController();
   String FileofDelete = '';
-  String dir = '/Aplicaciónes móviles/Primer parcial/Semana 2';
+  String dir = '/Fundamentos de programación/Primer parcial/Semana 4';
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
 
@@ -63,7 +63,7 @@ class _S2PM1PState extends State<S2PM1P> {
         appBar: AppBar(
           backgroundColor: const Color(0xFF383838),
           centerTitle: true,
-          title: const Text('Aplicaciónes móviles P1 - S2'),
+          title: const Text('Fundamentos de programación P1 - S4'),
         ),
         body: SafeArea(
           child: ListView(

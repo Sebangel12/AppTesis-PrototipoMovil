@@ -5,6 +5,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import '../../../../../globalwidgets/PDFView.dart';
+import '../../../../../globalwidgets/pdfapi.dart';
+import '../../../../../globalwidgets/pdfviewpage.dart';
+import 'package:flutter/cupertino.dart';
 
 class S5BD3P extends StatefulWidget {
   @override
@@ -12,9 +16,12 @@ class S5BD3P extends StatefulWidget {
 }
 
 class _S5BD3PState extends State<S5BD3P> {
+  late bool _isactive = false;
   PlatformFile? pickedFile;
   UploadTask? uploadTask;
-
+  final _textController = TextEditingController();
+  String FileofDelete = '';
+  String dir = '/Bases de datos/Tercer parcial/Semana 5';
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
 
@@ -26,7 +33,7 @@ class _S5BD3PState extends State<S5BD3P> {
 
   Future uploadFile() async {
     final path =
-        "Bases de datos/Tercer parcial/Semana 5/${pickedFile!.name}"; // ubicacion de almacenar el archivo
+        "$dir/${pickedFile!.name}"; // ubicacion de almacenar el archivo
     final file = File(pickedFile!.path!);
 
     final ref = FirebaseStorage.instance.ref().child(path);
@@ -34,13 +41,19 @@ class _S5BD3PState extends State<S5BD3P> {
       uploadTask = ref.putFile(file);
     });
     final snapshot = await uploadTask!.whenComplete(() {});
-
     final urlDownload = await snapshot.ref.getDownloadURL();
     print("Download link: $urlDownload");
 
     setState(() {
       uploadTask = null;
     });
+  }
+
+  late Future<ListResult> futureFiles;
+  @override
+  void initState() {
+    super.initState();
+    futureFiles = FirebaseStorage.instance.ref(dir).listAll();
   }
 
   double progress = 0.0;
@@ -50,87 +63,202 @@ class _S5BD3PState extends State<S5BD3P> {
         appBar: AppBar(
           backgroundColor: const Color(0xFF383838),
           centerTitle: true,
-          title: const Text('Bases de Datos P3 - S5'),
+          title: const Text('Bases de datos P3 - S5'),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        body: SafeArea(
+          child: ListView(
             children: [
-              Container(
-                color: Colors.transparent,
-                height: 100,
-                width: 100,
-                child: LiquidCircularProgressIndicator(
-                  value: progress,
-                  valueColor: const AlwaysStoppedAnimation(Color(0xFFCDBE78)),
-                  backgroundColor: Colors.transparent,
-                  direction: Axis.vertical,
-                  center: Text(
-                    "$progress%",
-                    style: GoogleFonts.poppins(
-                        color: Colors.black87, fontSize: 25),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 300,
+                    child: FutureBuilder<ListResult>(
+                        future: futureFiles,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final files = snapshot.data!.items;
+                            return ListView.builder(
+                              itemCount: files.length,
+                              itemBuilder: (context, index) {
+                                final file = files[index];
+                                return ListTile(
+                                  leading: Text(
+                                    file.name,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                  title: IconButton(
+                                    color: Colors.white,
+                                    icon: const Icon(Icons.computer),
+                                    onPressed: () => downloadFiles(file),
+                                  ),
+                                  trailing: IconButton(
+                                    color: Colors.white,
+                                    icon: const Icon(Icons.phone_android),
+                                    onPressed: () async {
+                                      final path = dir;
+                                      final url = file.name;
+                                      final archv =
+                                          await PDFApi.loadFirebase(url, path);
+                                      if (archv == null) return;
+                                      openPDF(context, archv);
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                              child: Text("Ah ocurrido un error"),
+                            );
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        }),
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  FilePickerResult? result =
-                      await FilePicker.platform.pickFiles();
+                  Container(
+                    color: Colors.transparent,
+                    height: 75,
+                    width: 50,
+                    child: LiquidCircularProgressIndicator(
+                      value: progress,
+                      valueColor:
+                          const AlwaysStoppedAnimation(Color(0xFFCDBE78)),
+                      backgroundColor: Colors.transparent,
+                      direction: Axis.vertical,
+                      center: Text(
+                        "$progress%",
+                        style: GoogleFonts.poppins(
+                            color: Colors.black87, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  CupertinoButton(
+                    color: (const Color(0xFFCDBE78)),
+                    onPressed: () async {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
 
-                  if (result != null) {
-                    Uint8List? file = result.files.first.bytes;
-                    String fileName = result.files.first.name;
+                      if (result != null) {
+                        Uint8List? file = result.files.first.bytes;
+                        String fileName = result.files.first.name;
 
-                    UploadTask task = FirebaseStorage.instance
-                        .ref()
-                        .child(
-                            "Bases de datos/Tercer parcial/Semana 5/$fileName")
-                        .putData(file!);
+                        UploadTask task = FirebaseStorage.instance
+                            .ref()
+                            .child("$dir/$fileName")
+                            .putData(file!);
 
-                    task.snapshotEvents.listen((event) {
-                      setState(() {
-                        progress = ((event.bytesTransferred.toDouble() /
-                                event.totalBytes.toDouble() *
-                                100)
-                            .roundToDouble());
-                        print(progress);
-                      });
-                    });
-                  }
-                },
-                child: const Text("Subir archivo desde el aplicativo web"),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              if (pickedFile != null)
-                Center(
-                    child: Container(
-                  color: const Color(0xFFCDBE78),
-                  padding: const EdgeInsets.only(right: 30, left: 30),
-                  child: Center(child: Text(pickedFile!.name)),
-                )),
-              const SizedBox(
-                height: 32,
-              ),
-              ElevatedButton(
-                  onPressed: selectFile,
-                  child: const Text(
-                      "Seleccionar archivo desde el aplicativo móvil")),
-              const SizedBox(
-                height: 32,
-              ),
-              ElevatedButton(
-                  onPressed: uploadFile,
-                  child: const Text("Subir archivo desde el aplicativo móvil")),
-              progressdeupload(),
+                        task.snapshotEvents.listen((event) {
+                          setState(() {
+                            progress = ((event.bytesTransferred.toDouble() /
+                                    event.totalBytes.toDouble() *
+                                    100)
+                                .roundToDouble());
+                          });
+                        });
+                      }
+                    },
+                    child: const Text("Subir archivo desde el aplicativo web"),
+                  ),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  if (pickedFile != null)
+                    Center(
+                        child: Container(
+                      color: const Color(0xFFCDBE78),
+                      padding: const EdgeInsets.only(right: 30, left: 30),
+                      child: Center(child: Text(pickedFile!.name)),
+                    )),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  CupertinoButton(
+                      color: (const Color(0xFFCDBE78)),
+                      onPressed: selectFile,
+                      child: const Text(
+                          "Seleccionar archivo desde el aplicativo móvil")),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  CupertinoButton(
+                      color: (const Color(0xFFCDBE78)),
+                      onPressed: uploadFile,
+                      child: const Text(
+                          "Subir archivo desde el aplicativo móvil")),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  progressdeupload(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 20, left: 20),
+                    color: Colors.white,
+                    child: TextField(
+                      controller: _textController,
+                      decoration: InputDecoration(
+                        hintText:
+                            'Ingrese el nombre del documento con su extension',
+                        suffix: Checkbox(
+                          onChanged: (bool? valueIn) {
+                            setState(() {
+                              _isactive = valueIn!;
+                              FileofDelete = _textController.text;
+                            });
+                          },
+                          value: _isactive,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    child: CupertinoButton(
+                        color: (const Color(0xFFCDBE78)),
+                        child: Text('Borrar el documento'),
+                        onPressed: () => DeleteFiles()),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              )
             ],
           ),
         ),
       );
+
+  void openPDF(BuildContext context, File file) => Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => PDfViewPage(archv: file)),
+      );
+
+  void DeleteFiles() async {
+    final filedelet = FirebaseStorage.instance.ref(dir).child(FileofDelete);
+    //print('$filedelet .lol');
+    await filedelet.delete();
+  }
+
+  Future downloadFiles(Reference ref) async {
+    final url = await ref.getDownloadURL();
+    final name = ref.name;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => PDFView(
+                  url: url,
+                  name: name,
+                )));
+  }
 
   Widget progressdeupload() => StreamBuilder<TaskSnapshot>(
         stream: uploadTask?.snapshotEvents,
@@ -146,7 +274,7 @@ class _S5BD3PState extends State<S5BD3P> {
                   LinearProgressIndicator(
                     value: progress,
                     backgroundColor: Colors.grey,
-                    color: Colors.green,
+                    color: const Color(0xFFCDBE78),
                   ),
                   Center(
                     child: Text(

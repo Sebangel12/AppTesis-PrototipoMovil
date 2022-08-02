@@ -86,7 +86,7 @@ Future<void> sendLoginForm1(BuildContext context) async {
         content: errorMessage,
       );
     } else {
-      router.pushReplacementNamed(Routes.MENUADMIN);
+      router.pushReplacementNamed(Routes.CONTRON_ACT);
     }
   }
 }

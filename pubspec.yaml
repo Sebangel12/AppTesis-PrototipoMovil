@@ -51,9 +51,11 @@ dependencies:
   flutter_pdfview: ^1.2.2
   path_provider: ^2.0.11
   syncfusion_pdfviewer_web: ^20.2.39-beta
+
  
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.9.3
   flutter_test:
     sdk: flutter
 
@@ -67,7 +69,9 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_icons:
+  android: "launcher_icon"
+  image_path: "assets/img/logo carrera 1.png"
 # The following section is specific to Flutter packages.
 flutter:
 

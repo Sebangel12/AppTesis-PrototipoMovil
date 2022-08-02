@@ -1,5 +1,5 @@
+import 'package:atel_redes_telecom_prot/app/ui/globalwidgets/ingresocod.dart';
 import 'package:atel_redes_telecom_prot/app/ui/pages/Menu/LoginAdmin.dart';
-import 'package:atel_redes_telecom_prot/app/ui/pages/Menu/MenuAdmin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ class AdminLogin extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const MenuAdmin();
+              return codigo();
             } else {
               return const LoginAdmin();
             }

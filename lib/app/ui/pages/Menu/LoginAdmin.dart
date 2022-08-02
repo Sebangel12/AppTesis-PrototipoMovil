@@ -123,16 +123,12 @@ class _LoginAdminState extends State<LoginAdmin> {
                                                   const SizedBox(
                                                     height: 20,
                                                   ),
-                                                  ElevatedButton.icon(
-                                                    // style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(50),),
-                                                    //onPressed: signIn,
-                                                    onPressed: () =>
-                                                        sendLoginForm1(context),
-                                                    icon: const Icon(
-                                                        Icons.lock_open),
-                                                    label:
-                                                        const Text("Ingresar"),
-                                                  ),
+                                                  CupertinoButton(
+                                                      color: Color(0xFF383838),
+                                                      child: Text('Ingresar'),
+                                                      onPressed: () =>
+                                                          sendLoginForm1(
+                                                              context)),
                                                   const SizedBox(
                                                     height: 20,
                                                   ),

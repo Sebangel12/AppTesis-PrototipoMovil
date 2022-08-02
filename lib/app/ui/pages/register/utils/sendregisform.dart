@@ -27,7 +27,7 @@ Future<void> SendRegisForm(BuildContext context) async {
       );
     } else {
       router.pushNamedAndRemoveUntil(
-        Routes.LOGIN,
+        Routes.HOME,
       );
       response.user;
     }
