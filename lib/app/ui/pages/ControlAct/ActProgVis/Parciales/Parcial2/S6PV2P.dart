@@ -56,12 +56,11 @@ class _S6PV2PState extends State<S6PV2P> {
     futureFiles = FirebaseStorage.instance.ref(dir).listAll();
   }
 
-  double progress = 0.0;
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: const Color(0xFF066163),
+        backgroundColor: const Color(0xFFFFFFFF),
         appBar: AppBar(
-          backgroundColor: const Color(0xFF383838),
+          backgroundColor: const Color(0xFF388E3C),
           centerTitle: true,
           title: const Text('Programación visual P2 - S6'),
         ),
@@ -71,7 +70,7 @@ class _S6PV2PState extends State<S6PV2P> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 300,
                     child: FutureBuilder<ListResult>(
                         future: futureFiles,
@@ -83,18 +82,18 @@ class _S6PV2PState extends State<S6PV2P> {
                               itemBuilder: (context, index) {
                                 final file = files[index];
                                 return ListTile(
-                                  leading: Text(
-                                    file.name,
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                  title: IconButton(
-                                    color: Colors.white,
-                                    icon: const Icon(Icons.computer),
+                                  leading: IconButton(
+                                    color: Colors.black,
+                                    icon: const Icon(Icons.download),
                                     onPressed: () => downloadFiles(file),
                                   ),
+                                  title: Text(
+                                    textWidthBasis: TextWidthBasis.parent,
+                                    file.name,
+                                  ),
                                   trailing: IconButton(
-                                    color: Colors.white,
-                                    icon: const Icon(Icons.phone_android),
+                                    color: Colors.black,
+                                    icon: const Icon(Icons.open_in_new),
                                     onPressed: () async {
                                       final path = dir;
                                       final url = file.name;
@@ -118,86 +117,33 @@ class _S6PV2PState extends State<S6PV2P> {
                           }
                         }),
                   ),
-                  Container(
-                    color: Colors.transparent,
-                    height: 75,
-                    width: 50,
-                    child: LiquidCircularProgressIndicator(
-                      value: progress,
-                      valueColor:
-                          const AlwaysStoppedAnimation(Color(0xFFCDBE78)),
-                      backgroundColor: Colors.transparent,
-                      direction: Axis.vertical,
-                      center: Text(
-                        "$progress%",
-                        style: GoogleFonts.poppins(
-                            color: Colors.black87, fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  CupertinoButton(
-                    color: (const Color(0xFFCDBE78)),
-                    onPressed: () async {
-                      FilePickerResult? result =
-                          await FilePicker.platform.pickFiles();
-
-                      if (result != null) {
-                        Uint8List? file = result.files.first.bytes;
-                        String fileName = result.files.first.name;
-
-                        UploadTask task = FirebaseStorage.instance
-                            .ref()
-                            .child("$dir/$fileName")
-                            .putData(file!);
-
-                        task.snapshotEvents.listen((event) {
-                          setState(() {
-                            progress = ((event.bytesTransferred.toDouble() /
-                                    event.totalBytes.toDouble() *
-                                    100)
-                                .roundToDouble());
-                          });
-                        });
-                      }
-                    },
-                    child: const Text("Subir archivo desde el aplicativo web"),
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
+                  const SizedBox(height: 32),
                   if (pickedFile != null)
                     Center(
                         child: Container(
-                      color: const Color(0xFFCDBE78),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 100),
+                      color: const Color(0xFF388E3C),
                       padding: const EdgeInsets.only(right: 30, left: 30),
-                      child: Center(child: Text(pickedFile!.name)),
+                      child: Center(
+                          child: Text(
+                        pickedFile!.name,
+                        textWidthBasis: TextWidthBasis.parent,
+                      )),
                     )),
-                  const SizedBox(
-                    height: 32,
-                  ),
+                  const SizedBox(height: 32),
                   CupertinoButton(
-                      color: (const Color(0xFFCDBE78)),
+                      color: Colors.black,
                       onPressed: selectFile,
-                      child: const Text(
-                          "Seleccionar archivo desde el aplicativo móvil")),
-                  const SizedBox(
-                    height: 32,
-                  ),
+                      child: const Text("Seleccionar archivo")),
+                  const SizedBox(height: 32),
                   CupertinoButton(
-                      color: (const Color(0xFFCDBE78)),
+                      color: Colors.black,
                       onPressed: uploadFile,
-                      child: const Text(
-                          "Subir archivo desde el aplicativo móvil")),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                      child: const Text("Subir archivo")),
+                  const SizedBox(height: 20),
                   progressdeupload(),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Container(
                     margin: EdgeInsets.only(right: 20, left: 20),
                     color: Colors.white,
@@ -218,18 +164,14 @@ class _S6PV2PState extends State<S6PV2P> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Container(
                     child: CupertinoButton(
-                        color: (const Color(0xFFCDBE78)),
+                        color: Colors.black,
                         child: Text('Borrar el documento'),
                         onPressed: () => DeleteFiles()),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                 ],
               )
             ],
@@ -268,18 +210,18 @@ class _S6PV2PState extends State<S6PV2P> {
             double progress = data.bytesTransferred / data.totalBytes;
             return SizedBox(
               height: 50,
+              width: 200,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
                   LinearProgressIndicator(
                     value: progress,
                     backgroundColor: Colors.grey,
-                    color: const Color(0xFFCDBE78),
+                    color: const Color(0xFF388E3C),
                   ),
                   Center(
                     child: Text(
                       "${(100 * progress).roundToDouble()}%",
-                      style: const TextStyle(color: Colors.white),
                     ),
                   )
                 ],

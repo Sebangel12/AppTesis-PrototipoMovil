@@ -23,9 +23,9 @@ class _AS6BD2PState extends State<AS6BD2P> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: const Color(0xFF066163),
+        backgroundColor: const Color(0xFFFFFFFF),
         appBar: AppBar(
-          backgroundColor: const Color(0xFF383838),
+          backgroundColor: const Color(0xFF388E3C),
           centerTitle: true,
           title: const Text('Base de datos P2 - S6'),
         ),
@@ -39,18 +39,18 @@ class _AS6BD2PState extends State<AS6BD2P> {
                 itemBuilder: (context, index) {
                   final file = files[index];
                   return ListTile(
-                    leading: Text(
-                      file.name,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    title: IconButton(
-                      color: Colors.white,
-                      icon: const Icon(Icons.computer),
+                    leading: IconButton(
+                      color: Colors.black,
+                      icon: const Icon(Icons.download),
                       onPressed: () => downloadFiles(file),
                     ),
+                    title: Text(
+                      textWidthBasis: TextWidthBasis.parent,
+                      file.name,
+                    ),
                     trailing: IconButton(
-                      color: Colors.white,
-                      icon: const Icon(Icons.phone_android),
+                      color: Colors.black,
+                      icon: const Icon(Icons.open_in_new),
                       onPressed: () async {
                         final path = dir;
                         final url = file.name;
